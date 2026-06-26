@@ -1,14 +1,4 @@
 @echo off
-setlocal enabledelayedexpansion
-title Arkhe Power Plan Installer
-
-:: ---- self-elevate ----
-net session >nul 2>&1
-if %errorlevel% neq 0 (
-    powershell -Command "Start-Process '%~f0' -Verb RunAs" >nul 2>&1
-    exit /b
-)
-
 
 :: ---- subgroup GUIDs ----
 set "PROC=54533251-82be-4824-96c1-47b60b740d00"
