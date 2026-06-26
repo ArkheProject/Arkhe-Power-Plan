@@ -9,11 +9,6 @@ if %errorlevel% neq 0 (
     exit /b
 )
 
-echo ============================================
-echo   Arkhe Power Plan  -  Credits To Arkhe
-echo   Building: Idle OFF + Idle ON
-echo ============================================
-echo.
 
 :: ---- subgroup GUIDs ----
 set "PROC=54533251-82be-4824-96c1-47b60b740d00"
@@ -32,7 +27,7 @@ set "ESAVER=de830923-a562-41af-a086-e3a2c6bad2da"
 :: ============================================================
 ::  UNHIDE all advanced settings (global, run once)
 :: ============================================================
-echo [1/3] Unhiding advanced settings...
+echo Unhiding...
 for %%S in (
  5d76a2ca-e8c0-402f-a133-2158492d58ad 4b92d758-5a24-4851-a470-815d78aee119
  7b224883-b3cc-4d79-819f-8374152cbe7c c4581c31-89ab-4597-8e2b-9c9cab440e6b
@@ -87,21 +82,15 @@ powercfg -attributes %BG% 309dce9b-bef4-4119-9921-a851fb12f0f4 -ATTRIB_HIDE >nul
 ::  BUILD both plans  (call :BUILD "<label>" <idle value>)
 ::  idle value: 1 = idle disabled (OFF) , 0 = idle allowed (ON)
 :: ============================================================
-echo [2/3] Building plans...
+echo Building...
 call :BUILD "Idle OFF" 1
 call :BUILD "Idle ON" 0
 
 :: activate the safer Idle ON variant last
-echo [3/3] Activating Arkhe Power Plan (Idle ON)...
+echo Activating...
 powercfg -setactive %PLAN_ON%
 
-echo.
 echo Done.
-echo   Active : Arkhe Power Plan (Idle ON)
-echo   Also created: Arkhe Power Plan (Idle OFF)
-echo   .pow backups saved next to this file.
-echo   Switch anytime in Power Options or run:  powercfg -setactive ^<GUID^>
-echo.
 pause
 exit /b 0
 
@@ -114,7 +103,7 @@ if not defined PLAN for /f "tokens=4" %%G in ('powercfg -duplicatescheme 8c5e7fd
 if not defined PLAN ( echo ERROR creating "%LABEL%". & goto :eof )
 powercfg -changename %PLAN% "Arkhe Power Plan (%LABEL%)" "Credits To Arkhe"
 if "%LABEL%"=="Idle ON" set "PLAN_ON=%PLAN%"
-echo       %LABEL%  ->  %PLAN%
+echo %LABEL%
 
 :: Processor (idle disable uses %IDLE%)
 call :SV %PROC% 5d76a2ca-e8c0-402f-a133-2158492d58ad %IDLE%
